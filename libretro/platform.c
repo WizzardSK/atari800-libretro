@@ -464,15 +464,14 @@ int PLATFORM_Keyboard(void)
 	if (INPUT_cx85){
 		if (Key_State[RETROK_KP1])				return AKEY_CX85_1;
 		else if (Key_State[RETROK_KP2])			return AKEY_CX85_2;
-		else if (Key_State[RETROK_KP2])			return AKEY_CX85_3;
-		else if (Key_State[RETROK_KP3])			return AKEY_CX85_4;
-		else if (Key_State[RETROK_KP4])			return AKEY_CX85_5;
-		else if (Key_State[RETROK_KP5])			return AKEY_CX85_6;
-		else if (Key_State[RETROK_KP6])			return AKEY_CX85_7;
-		else if (Key_State[RETROK_KP7])			return AKEY_CX85_8;
-		else if (Key_State[RETROK_KP8])			return AKEY_CX85_9;
-		else if (Key_State[RETROK_KP9])			return AKEY_CX85_0;
-		else if (Key_State[RETROK_KP0])			return AKEY_CX85_2;
+		else if (Key_State[RETROK_KP3])			return AKEY_CX85_3;
+		else if (Key_State[RETROK_KP4])			return AKEY_CX85_4;
+		else if (Key_State[RETROK_KP5])			return AKEY_CX85_5;
+		else if (Key_State[RETROK_KP6])			return AKEY_CX85_6;
+		else if (Key_State[RETROK_KP7])			return AKEY_CX85_7;
+		else if (Key_State[RETROK_KP8])			return AKEY_CX85_8;
+		else if (Key_State[RETROK_KP9])			return AKEY_CX85_9;
+		else if (Key_State[RETROK_KP0])			return AKEY_CX85_0;
 		else if (Key_State[RETROK_KP_PERIOD])	return AKEY_CX85_PERIOD;
 		else if (Key_State[RETROK_KP_MINUS])	return AKEY_CX85_MINUS;
 		else if (Key_State[RETROK_KP_ENTER])	return AKEY_CX85_PLUS_ENTER;
