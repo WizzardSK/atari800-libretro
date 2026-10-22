@@ -46,6 +46,8 @@ int CROP_HEIGHT;
 int VIRTUAL_WIDTH;
 int retrow = 400;
 int retroh = 300;
+/* atari800_artifacting_type: TRUE for atari800's new NTSC artifacting */
+static int ntsc_artif_new = 0;
 
 #define ATARI_JOYPAD_BUTTONS 16
 #define ATARI_NUMBER_JOYSTICKS 4
@@ -1257,6 +1259,31 @@ static void update_variables(void)
 
     }
 
+    /* NTSC artifacting: atari800's old or new emulation of it. The new one
+       also draws what a game hides in hi-res colour 0 the way the hardware
+       does (Pac-Man's HIGH SCORE at boot shows only with the old one, #114). */
+    {
+        static int artif_new = -1;
+        int want_new = 0;
+
+        var.key = "atari800_artifacting_type";
+        var.value = NULL;
+        if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+            want_new = strcmp(var.value, "new") == 0;
+        if (want_new != artif_new)
+        {
+            artif_new = want_new;
+            ntsc_artif_new = want_new;
+            /* A change of type with artifacting already on is applied here;
+               turning it on below picks up the type. */
+            if (ANTIC_artif_mode && Atari800_tv_mode == Atari800_TV_NTSC)
+            {
+                ARTIFACT_Set(ntsc_artif_new ? ARTIFACT_NTSC_NEW : ARTIFACT_NTSC_OLD);
+                ARTIFACT_SetTVMode(Atari800_TV_NTSC);
+            }
+        }
+    }
+
     /* Set artifacting type.  */
     var.key = "atari800_artifacting_mode";
     var.value = NULL;
@@ -1291,7 +1318,7 @@ static void update_variables(void)
         {
             if (Atari800_tv_mode == Atari800_TV_NTSC)
             {
-                ARTIFACT_Set(ARTIFACT_NTSC_OLD);
+                ARTIFACT_Set(ntsc_artif_new ? ARTIFACT_NTSC_NEW : ARTIFACT_NTSC_OLD);
                 ARTIFACT_SetTVMode(Atari800_TV_NTSC);
             }
             else if (Atari800_tv_mode == Atari800_TV_PAL)
